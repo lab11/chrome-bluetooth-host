@@ -24,6 +24,7 @@
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
       window.addEventListener('error', function(error) {
+        console.log(error);
         if (ChromeSamples && ChromeSamples.setStatus) {
           ChromeSamples.setStatus(error.message + ' (Your browser may not support this feature.)');
           error.preventDefault();
@@ -136,7 +137,8 @@ device information from a nearby Bluetooth Low Energy Device.</p>
 
   
     
-      <script>function onFormSubmit() {
+      <script>
+function onFormSubmit() {
   'use strict';
 
   let options = {filters: []};
@@ -250,69 +252,3 @@ device information from a nearby Bluetooth Low Energy Device.</p>
     </script>
   </body>
 </html>
-
-		  var ChromeSamples = {
-    log: function() {
-      var line = Array.prototype.slice.call(arguments).map(function(argument) {
-        return typeof argument === 'string' ? argument : JSON.stringify(argument);
-      }).join(' ');
-
-      document.querySelector('#log').textContent += line + '\n';
-    },
-
-    clearLog: function() {
-      document.querySelector('#log').textContent = '';
-    },
-
-    setStatus: function(status) {
-      document.querySelector('#status').textContent = status;
-    },
-
-    setContent: function(newContent) {
-      var content = document.querySelector('#content');
-      while(content.hasChildNodes()) {
-        content.removeChild(content.lastChild);
-      }
-      content.appendChild(newContent);
-    }
-  };
-</script>
-
-<h3>Live Output</h3>
-<div id="output" class="output">
-  <div id="content"></div>
-  <div id="status"></div>
-  <pre id="log"></pre>
-</div>
-
-
-		<button onclick="clicked()">Connect</button>
-
-		<script>
-		function clicked() {
-			'use strict';
-
-			let options = {filters: []};
-
-			options.fitlers.push({name: BLEES});
-
-	log('requesting Bleutooth Device');
-	navigators.bluetooth.requestDevice(options)
-	.then(device => {
-    	log('> Name:             ' + device.name);
-    	log('> Id:               ' + device.id);
-    	log('> Device Class:     ' + device.deviceClass);
-    	log('> Vendor Id Source: ' + device.vendorIDSource);
-    	log('> Vendor Id:        ' + device.vendorID);
-    	log('> Product Id:       ' + device.productID);
-    	log('> Product Version:  ' + device.productVersion);
-    	log('> UUIDs:            ' + device.uuids.join('\n' + ' '.repeat(20)));
-    	if (device.adData) {
-    	  log('> Tx Power:         ' + device.adData.txPower + ' dBm');
-    	  log('> RSSI:             ' + device.adData.rssi + ' dBm');
-    	}
-  	}).catch(error => {
-    	log('Argh! ');
-  	});
-
-</script>
