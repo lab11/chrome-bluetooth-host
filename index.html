@@ -26,16 +26,23 @@
   };
 </script>
 
+<h3>Live Output</h3>
+<div id="output" class="output">
+  <div id="content"></div>
+  <div id="status"></div>
+  <pre id="log"></pre>
+</div>
 
-<button onclick="clicked()">Connect</button>
 
-<script>
-function clicked() {
-	'use strict';
+		<button onclick="clicked()">Connect</button>
 
-	let options = {filters: []};
+		<script>
+		function clicked() {
+			'use strict';
 
-	options.fitlers.push({name: BLEES});
+			let options = {filters: []};
+
+			options.fitlers.push({name: BLEES});
 
 	log('requesting Bleutooth Device');
 	navigators.bluetooth.requestDevice(options)
